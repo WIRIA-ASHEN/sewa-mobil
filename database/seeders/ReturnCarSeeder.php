@@ -17,7 +17,7 @@ class ReturnCarSeeder extends Seeder
     public function run()
     {
         // Ambil rental dengan status 'active' (mobil yang sedang disewa)
-        $rentals = Rental::where('status', 'berjalan')->get();
+        $rentals = Rental::where('status_rental', 'berjalan')->get();
 
         foreach ($rentals as $rental) {
             // Menghitung durasi sewa dalam hari
@@ -32,7 +32,7 @@ class ReturnCarSeeder extends Seeder
             ]);
 
             // Update status rental menjadi 'returned'
-            $rental->update(['status' => 'selesai']);
+            $rental->update(['status_rental' => 'selesai']);
         }
     }
 }

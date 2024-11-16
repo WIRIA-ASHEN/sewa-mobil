@@ -40,7 +40,7 @@ class RentalSeeder extends Seeder
                     'tanggal_mulai' => $tanggal_mulai,
                     'tanggal_selesai' => $tanggal_selesai,
                     'total_harga' => $total_harga,
-                    'status' => 'berjalan',
+                    'status_rental' => 'berjalan',
                 ]);
             }
         }

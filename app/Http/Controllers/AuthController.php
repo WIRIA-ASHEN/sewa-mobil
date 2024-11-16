@@ -13,19 +13,17 @@ class AuthController extends Controller
     // Registrasi Pengguna
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        // Validasi input
+        $request->validate([
             'nama' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
             'nomor_telepon' => 'required|string|max:15',
-            'nomor_sim' => 'required|string|max:15',
+            'nomor_sim' => 'required|string|size:16|unique:users,nomor_sim',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|min:6|confirmed',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-
+        // Buat user baru
         $user = User::create([
             'nama' => $request->nama,
             'alamat' => $request->alamat,
@@ -33,12 +31,14 @@ class AuthController extends Controller
             'nomor_sim' => $request->nomor_sim,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 'user', // Set default role sebagai user
         ]);
 
-        // Login setelah registrasi
+        // Login user setelah registrasi
         Auth::login($user);
 
-        return response()->json(['message' => 'Registrasi berhasil!', 'user' => $user], 201);
+        // Redirect ke halaman dashboard
+        return redirect()->route('login')->with('success', 'Registrasi berhasil!');
     }
 
     // Login Pengguna
@@ -56,20 +56,21 @@ class AuthController extends Controller
             if (Auth::user()->role == 'admin') {
                 return redirect()->route('admin.dashboard');
             } else {
-                return redirect()->route('customer.dashboard');
+                return redirect()->route('user.mobil');
             }
         }
 
         return back()->withErrors([
-            'email' => 'Credentials do not match our records.',
+            'email' => 'emal atau password salah',
         ]);
     }
 
     // Logout Pengguna
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
-
-        return response()->json(['message' => 'Logout berhasil!'], 200);
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('login');
     }
 }

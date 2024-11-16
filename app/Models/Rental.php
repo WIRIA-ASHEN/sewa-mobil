@@ -16,7 +16,7 @@ class Rental extends Model
         'car_id',
         'tanggal_mulai',
         'tanggal_selesai',
-        'status',
+        'status_rental',
         'total_harga',
     ];
 

@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->foreignId('car_id')->constrained()->onDelete('cascade');
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
-            $table->enum('status', ['berjalan', 'selesai']);
+            $table->enum('status_rental', ['berjalan','selesai','pending']);
             $table->integer('total_harga')->nullable();
             $table->timestamps();
         });

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -14,6 +16,37 @@ Route::get('/register', function () {
     return view('user.register');
 });
 
-Route::post('register', [AuthController::class, 'register']);
-Route::post('/login-akun', [AuthController::class, 'login'])->name('login');
-Route::post('logout', [AuthController::class, 'logout']);
+Route::post('login', [AuthController::class, 'login'])->name('login');
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('register', [AuthController::class, 'register'])->name('register');
+
+Route::middleware(['auth'])->group(function () {
+
+    // Grup route untuk Admin
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/mobil', [AdminController::class, 'mobil'])->name('admin.mobil');
+        Route::get('/mobil/tambah', [AdminController::class, 'tambah'])->name('admin.mobil.tambah');
+        Route::post('/mobil/store', [AdminController::class, 'store'])->name('admin.mobil.store');
+        Route::get('/mobil/{id}/edit', [AdminController::class, 'edit'])->name('admin.mobil.edit');
+        Route::put('/mobil/{id}/update', [AdminController::class, 'update'])->name('admin.mobil.update');
+        Route::delete('/mobil/{id}/hapus', [AdminController::class, 'hapus'])->name('admin.mobil.hapus');
+        
+        Route::get('/mobil/rental', [AdminController::class, 'rental'])->name('admin.rental');
+        Route::put('/mobil/rental/{id}/berjalan', [AdminController::class, 'rental_update'])->name('admin.update.berjalan');
+    });
+
+    Route::middleware(['auth', 'role:user'])->group(function () {
+        Route::get('/user/mobil', [UserController::class, 'index'])->name('user.mobil');
+
+        Route::get('/user/mobil/{id}', [UserController::class, 'show'])->name('user.mobil.show');
+        Route::post('/user/mobil/{id}/rental', [UserController::class, 'rental'])->name('user.mobil.rental');
+
+        // Daftar mobil yang disewa oleh pengguna
+        Route::get('/user/rentals', [UserController::class, 'rentals'])->name('user.rentals');
+
+        // Pengembalian Mobil
+        // Route::post('/user/rental/{id}/return', [UserController::class, 'return'])->name('user.rental.return');
+    });
+});
+
