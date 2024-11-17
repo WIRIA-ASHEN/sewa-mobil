@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Car;
 use App\Models\Rental;
 use App\Models\ReturnCar;
@@ -10,6 +11,11 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    public function welcome()
+    {
+        $cars = Car::where('status', 'tersedia')->get();
+        return view('welcome', compact('cars'));
+    }
     public function dashboard()
     {
         $jumlahmobildisewa = Car::where('status', 'disewa')->count();
@@ -118,6 +124,20 @@ class AdminController extends Controller
 
         // Jika status bukan 'pending', return response error
         return response()->json(['success' => false, 'error' => 'Rental tidak dalam status pending.']);
+    }
+
+    public function return()
+    {
+        $returns = ReturnCar::all();
+        return view('admin.pengembalian.return', compact('returns'));
+    }
+
+    public function deleteRental($id)
+    {
+        $rental = Rental::findOrFail($id);
+        $rental->delete();
+
+        return redirect()->route('admin.rental')->with('success', 'Rental berhasil dihapus!');
     }
 
 }

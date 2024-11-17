@@ -5,9 +5,12 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [AdminController::class, 'welcome'])->name('welcome');
+
 
 Route::get('/login', function () {
     return view('user.login');
@@ -34,19 +37,20 @@ Route::middleware(['auth'])->group(function () {
         
         Route::get('/mobil/rental', [AdminController::class, 'rental'])->name('admin.rental');
         Route::put('/mobil/rental/{id}/berjalan', [AdminController::class, 'rental_update'])->name('admin.update.berjalan');
+        Route::delete('/mobil/{id}/hapus', [AdminController::class, 'deleteRental'])->name('admin.rental.hapus');
+        
+        Route::get('/mobil/return', [AdminController::class, 'return'])->name('admin.return');
+        Route::post('/mobil/return', [AdminController::class, 'processReturn'])->name('admin.return.process');
     });
 
     Route::middleware(['auth', 'role:user'])->group(function () {
         Route::get('/user/mobil', [UserController::class, 'index'])->name('user.mobil');
-
         Route::get('/user/mobil/{id}', [UserController::class, 'show'])->name('user.mobil.show');
         Route::post('/user/mobil/{id}/rental', [UserController::class, 'rental'])->name('user.mobil.rental');
-
-        // Daftar mobil yang disewa oleh pengguna
         Route::get('/user/rentals', [UserController::class, 'rentals'])->name('user.rentals');
-
-        // Pengembalian Mobil
-        // Route::post('/user/rental/{id}/return', [UserController::class, 'return'])->name('user.rental.return');
+        Route::get('/user/rentals/{id}', [UserController::class, 'detailRentals'])->name('user.rentals.detail');
+        Route::get('/user/return', [UserController::class, 'return'])->name('user.return');
+        Route::post('/user/return', [UserController::class, 'returnProcess'])->name('user.return.process');
     });
 });
 

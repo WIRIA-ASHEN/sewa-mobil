@@ -124,7 +124,6 @@ h2 {
     display: inline-block;
 }
 
-/* Form Styling */
 form {
     margin-top: 20px;
 }
@@ -149,7 +148,6 @@ form {
     gap: 15px;
 }
 
-/* Media Queries */
 @media (max-width: 768px) {
     .table {
         font-size: 0.9rem;

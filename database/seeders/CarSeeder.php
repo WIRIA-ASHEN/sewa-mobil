@@ -14,7 +14,6 @@ class CarSeeder extends Seeder
      */
     public function run()
     {
-        // Menambahkan 5 mobil ke dalam sistem
         Car::create([
             'merek' => 'Toyota',
             'model' => 'Avanza',

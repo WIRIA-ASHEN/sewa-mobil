@@ -20,19 +20,16 @@ class Rental extends Model
         'total_harga',
     ];
 
-    // Relasi: Rental dimiliki oleh User
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    // Relasi: Rental dimiliki oleh Car
     public function car(): BelongsTo
     {
         return $this->belongsTo(Car::class);
     }
 
-    // Relasi: Rental memiliki satu Return
     public function return(): HasOne
     {
         return $this->hasOne(ReturnCar::class);

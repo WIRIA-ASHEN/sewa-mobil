@@ -35,26 +35,22 @@
 
                 <form action="{{ route('user.mobil.rental', $car->id) }}" method="POST">
                     @csrf
-                    <!-- Input Tanggal Mulai -->
                     <div class="mb-3">
                         <label for="tanggal_mulai" class="form-label">Tanggal Mulai</label>
                         <input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai" required>
                     </div>
 
-                    <!-- Input Tanggal Selesai -->
                     <div class="mb-3">
                         <label for="tanggal_selesai" class="form-label">Tanggal Selesai</label>
                         <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai" required>
                     </div>
 
-                    <!-- Total Harga -->
                     <div class="mb-3">
                         <label for="total_harga" class="form-label">Total Harga</label>
                         <input type="text" class="form-control" id="total_harga" name="total_harga" readonly>
                     </div>
                     <input type="hidden" name="status_rental" id="status_rental" value="pending">
 
-                    <!-- Tombol Sewa -->
                     <button type="submit" class="btn btn-success">Sewa Mobil</button>
                 </form>
             </div>

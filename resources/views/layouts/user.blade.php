@@ -14,17 +14,31 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="{{ route('user.mobil') }}">Rental Mobil</a>
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="{{ route('user.rentals') }}">Mobil Saya</a></li>
+
+            <ul class="navbar-nav ms-auto d-flex align-items-center">
+                <li class="nav-item me-3">
+                    <span class="nav-link">
+                        <a href="{{ route('user.rentals') }}" class="text-white text-decoration-none">Mobil Saya</a>
+                    </span>
+                </li>
+
+                <li class="nav-item me-3">
+                    <span class="nav-link">
+                        <a href="{{ route('user.return') }}" class="text-white text-decoration-none">Pengembalian</a>
+                    </span>
+                </li>
+
                 <li class="nav-item">
-                    <form method="POST" action="{{ route('logout') }}">
+                    <form method="POST" action="{{ route('logout') }}" class="d-flex align-items-center">
                         @csrf
-                        <button class="btn btn-link nav-link">Keluar</button>
+                        <button type="submit" class="btn btn-link text-white text-decoration-none p-0 mb-3">Keluar</button>
                     </form>
                 </li>
             </ul>
         </div>
     </nav>
+
+
     <div class="container mt-5">
         @yield('content')
     </div>

@@ -18,8 +18,7 @@ class Car extends Model
         'status',
     ];
 
-    // Relasi: Car memiliki banyak Rentals
-    public function rentals(): HasMany
+    public function rental(): HasMany
     {
         return $this->hasMany(Rental::class);
     }

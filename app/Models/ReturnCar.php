@@ -15,11 +15,10 @@ class ReturnCar extends Model
     protected $fillable = [
         'rental_id',
         'tanggal_pengembalian',
-        'jumlah_hari',
-        'total_biaya',
+        'jumlah_hari_sewa',
+        'biaya_sewa',
     ];
 
-    // Relasi: Return dimiliki oleh Rental
     public function rental(): BelongsTo
     {
         return $this->belongsTo(Rental::class);

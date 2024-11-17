@@ -34,10 +34,8 @@ class AuthController extends Controller
             'role' => 'user', // Set default role sebagai user
         ]);
 
-        // Login user setelah registrasi
         Auth::login($user);
 
-        // Redirect ke halaman dashboard
         return redirect()->route('login')->with('success', 'Registrasi berhasil!');
     }
 
@@ -65,7 +63,6 @@ class AuthController extends Controller
         ]);
     }
 
-    // Logout Pengguna
     public function logout(Request $request)
     {
         Auth::logout();

@@ -21,7 +21,6 @@
                 <label for="tarif_sewa_per_hari" class="form-label">Tarif Sewa per Hari</label>
                 <input type="number" class="form-control" id="tarif_sewa_per_hari" name="tarif_sewa_per_hari" required>
             </div>
-            {{-- <input type="hidden" class="form-control" id="status" name="status" value="tersedia" required> --}}
 
             <button type="submit" class="btn btn-primary">Simpan</button>
         </form>

@@ -13,7 +13,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // Daftarkan middleware global atau named middleware
         $this->app->singleton('role', function () {
             return new RoleMiddleware;
         });
